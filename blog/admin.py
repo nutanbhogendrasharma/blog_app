@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Aricle
+from .models import Article
 
 # Register your models here.
-#admin.site.register(Aricle)
+#admin.site.register(Article)
 
-@admin.register(Aricle)
+@admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'author', 'publish', 'status']
     list_filter = ['status', 'created', 'publish', 'author']
@@ -14,3 +14,5 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     ordering = ['status', 'publish']
     pass
+
+
