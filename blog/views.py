@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import CommentForm
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
+from django.db.models import Count
 
 # Create your views here.
 def list_of_articles(request, tag_slug = None):
@@ -43,13 +44,22 @@ def article_details(request, year, month, day, article):
         # Form for users to write comment
         form = CommentForm()
 
+        # Retrieving list of similar articles
+        article_tags_ids = article.tags.values_list('id', flat=True)
+        similar_published_articles = Article.publishedArticles.filter(tags__in=article_tags_ids)\
+                                        .exclude(id=article.id)
+        similar_articles = similar_published_articles.annotate(same_tags_in_article=Count('tags'))\
+                                        .order_by('-same_tags_in_article','-publish')[:3]
+        
     except Article.DoesNotExist:
         raise Http404("No article found.")
     
     return render(request, 'blog/detail.html', {
-            'article': article,
-            'comments': comments,
-            'form': form}
+                'article': article,
+                'comments': comments,
+                'form': form,
+                'similar_articles': similar_articles
+            }
         )
     pass
 
