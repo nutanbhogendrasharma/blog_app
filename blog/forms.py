@@ -8,3 +8,7 @@ class CommentForm(forms.ModelForm):
         pass
     
     pass
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
+    pass
