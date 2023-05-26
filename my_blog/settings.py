@@ -81,9 +81,6 @@ WSGI_APPLICATION = 'my_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            "init_command": "SET innodb_strict_mode=1",
-        },
         'NAME': 'gnyot6wqoi0aok6u',
         'USER': 'k5mj52sed86u5pzs',
         'PASSWORD': 'fyy72i766bebgkys',
